@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "arial"
+version = "0.1.0"
+description = "accessible rich internet agent llm"
+authors = [
+  "John Cocjin <fill in>",
+  "Shota Makino <shotes.makino@gmail.com>"
+]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+numpy = "^1.26.3"
+
+
+[tool.poetry.group.dev.dependencies]
+jupyter = "^1.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
