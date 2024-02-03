@@ -1,7 +1,11 @@
 
 ## Useful commands
-```poetry run jupyter notebook```
-```poetry run ipython kernel install --user --name=dev && jupyter notebook```
+```bash
+poetry run jupyter notebook
+```
+```bash
+poetry run ipython kernel install --user --name=dev && jupyter notebook
+```
 
 ## Containers
 Multiple dev-container setup in case we need different builds / environments. 
