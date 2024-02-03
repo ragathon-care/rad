@@ -1,0 +1,20 @@
+curl https://llm.diffbot.com/rag/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer {{$dotenv %DIFFBOT_TOKEN}}" \
+  -d '{
+      "model": "diffbot-medium",
+      "messages": [
+          {
+              "role": "system",
+              "content": "You are a helpful assistant."
+          },
+          {
+              "role": "user",
+              "content": "Who is the CEO of Twitter?"
+          }
+      ],
+      "stream": true,
+      "include_diffbot_response": true
+  }'
+
+
