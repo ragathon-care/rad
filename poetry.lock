@@ -1546,25 +1546,23 @@ test = ["httpx (>=0.24.1)", "pytest (>=7.4.0)", "scipy (>=1.10)"]
 
 [[package]]
 name = "llama-index"
-version = "0.9.42.post1"
+version = "0.9.42.post2"
 description = "Interface between LLMs and your data"
 optional = false
 python-versions = ">=3.8.1,<4.0"
-files = [
-    {file = "llama_index-0.9.42.post1-py3-none-any.whl", hash = "sha256:62736a9c164274c9deca6e11564a47b2aa2b643928d3023908695be5a9d91331"},
-    {file = "llama_index-0.9.42.post1.tar.gz", hash = "sha256:6b5f1727b412e9533f68926d387777795a5d4d48975a8b20d211360c2f4c868e"},
-]
+files = []
+develop = false
 
 [package.dependencies]
-aiohttp = ">=3.8.6,<4.0.0"
+aiohttp = "^3.8.6"
 dataclasses-json = "*"
 deprecated = ">=1.2.9.3"
-dirtyjson = ">=1.0.8,<2.0.0"
+dirtyjson = "^1.0.8"
 fsspec = ">=2023.5.0"
 httpx = "*"
-nest-asyncio = ">=1.5.8,<2.0.0"
+nest-asyncio = "^1.5.8"
 networkx = ">=3.0"
-nltk = ">=3.8.1,<4.0.0"
+nltk = "^3.8.1"
 numpy = "*"
 openai = ">=1.1.0"
 pandas = "*"
@@ -1582,6 +1580,12 @@ langchain = ["langchain (>=0.0.303)"]
 local-models = ["optimum[onnxruntime] (>=1.13.2,<2.0.0)", "sentencepiece (>=0.1.99,<0.2.0)", "transformers[torch] (>=4.33.1,<5.0.0)"]
 postgres = ["asyncpg (>=0.28.0,<0.29.0)", "pgvector (>=0.1.0,<0.2.0)", "psycopg2-binary (>=2.9.9,<3.0.0)"]
 query-tools = ["guidance (>=0.0.64,<0.0.65)", "jsonpath-ng (>=1.6.0,<2.0.0)", "lm-format-enforcer (>=0.4.3,<0.5.0)", "rank-bm25 (>=0.2.2,<0.3.0)", "scikit-learn", "spacy (>=3.7.1,<4.0.0)"]
+
+[package.source]
+type = "git"
+url = "https://github.com/run-llama/llama_index.git"
+reference = "HEAD"
+resolved_reference = "87dacc1f3a16169abc6068e40234219d87e604e4"
 
 [[package]]
 name = "markupsafe"
@@ -4230,4 +4234,4 @@ local-llm = ["llama-cpp-python", "torch", "transformers"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "21866af50a082162695cedd9e53ec2ea0f1e3b9333953bcd588afec73f937141"
+content-hash = "918fc2360b9f8393174528654d06add9c2ea9d6c93568a5947a55753c189db1d"
