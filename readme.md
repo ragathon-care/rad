@@ -4,6 +4,8 @@ temporary project name `arial` - changing project requires changing repo name (o
 and changing:
 - [ ] pyproject.toml["name"]
 - [ ] ./arial
+- [ ] change repo name
+- [ ] change any local git configurations of remotes
 
 ## Useful commands
 ```poetry run jupyter notebook```
