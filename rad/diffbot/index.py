@@ -1,35 +1,7 @@
-from llama_index.query_engine.custom import STR_OR_RESPONSE_TYPE
-from openai import OpenAI
-import os
-
-diffbot_token = os.environ.get("DIFFBOT_TOKEN")
-
-client = OpenAI(api_key=diffbot_token, base_url="https://llm.diffbot.com/rag/v1/")
-response = client.chat.completions.create(
-     model="diffbot-medium",
-     messages=[
-         {
-             "role": "user",
-             "content": "Who is the CEO of Twitter?"
-         }
-     ],
-     stream=False,
- )
-
-print(response.choices[0].message.content)
-
-# might be suitable with `KnowledgeGraphIndex`
-# [link](https://docs.llamaindex.ai/en/latest/examples/index_structs/knowledge_graph/KnowledgeGraphIndex_vs_VectorStoreIndex_vs_CustomIndex_combined.html#)
-# knowledge graphs were used as a way to retrieve additional information
-# for response generation with a custom retriever
-
-# not sure if we can turn a natural language query into a DQL (diffbot query lang)
-# via `KnowledgeGraphQueryEngine` but we can see..
-# [link](https://docs.llamaindex.ai/en/latest/examples/query_engine/knowledge_graph_query_engine.html#)
 import logging
 import json
 
-from typing import Any, Dict, List, Optional, Sequence, Type
+from typing import Any, Dict, List, Optional, Sequence
 
 import requests
 
@@ -45,6 +17,7 @@ from llama_index.service_context import ServiceContext
 from llama_index.storage.storage_context import StorageContext
 
 from llama_index.schema import BaseNode, Document
+from openai import OpenAI
 
 _logger = logging.getLogger(__name__)
 
@@ -132,7 +105,7 @@ class DiffBotQueryEngine(BaseManagedIndex):
         if kwargs.get("summary_enabled", True):
             from llama_index.indices.managed.vectara.query import VectaraQueryEngine
             
-            client = OpenAI(api_key=diffbot_token, base_url="https://llm.diffbot.com/rag/v1/")
+            client = OpenAI(api_key=self._diffbot_api_key, base_url="https://llm.diffbot.com/rag/v1/")
             response = client.chat.completions.create(
                 model="diffbot-medium",
                 messages=[
@@ -159,65 +132,3 @@ class DiffBotQueryEngine(BaseManagedIndex):
         nodes = self.retriever.retrieve(query_str)
         response_obj = self.response_synthesizer.synthesize(query_str, nodes)
         return response_obj
-        
-from llama_index.schema import QueryBundle
-from llama_index.callbacks.schema import CBEventType, EventPayload
-from llama_index.callbacks.base import CallbackManager
-from llama_index.postprocessor.types import BaseNodePostprocessor
-from llama_index.core.response.schema import RESPONSE_TYPE, Response
-
-
-class DiffbotQueryEngine(BaseQueryEngine):
-    def __init__(
-        self,
-        retriever: DiffbotRetriever,
-        summary_enabled: bool = False,
-        node_postprocessors: Optional[List[BaseNodePostprocessor]] = None,
-        callback_manager: Optional[CallbackManager] = None,
-        summary_response_lang: str = "eng",
-        summary_num_results: int = 5,
-        summary_prompt_name: str = "vectara-experimental-summary-ext-2023-10-23-small",
-    ) -> None:
-        self._retriever = retriever
-        self._summary_enabled = summary_enabled
-        self._summary_response_lang = summary_response_lang
-        self._summary_num_results = summary_num_results
-        self._summary_prompt_name = summary_prompt_name
-        self._node_postprocessors = node_postprocessors or []
-        super().__init__(callback_manager=callback_manager)
-
-    @classmethod
-    def from_args(
-        cls,
-        retriever: DiffbotRetriever,
-        summary_enabled: bool = False,
-        summary_response_lang: str = "eng",
-        summary_num_results: int = 5,
-        summary_prompt_name: str = "vectara-experimental-summary-ext-2023-10-23-small",
-        **kwargs: Any,
-    ) -> "DiffbotQueryEngine":
-       
-        return cls(
-            retriever=retriever,
-            summary_enabled=summary_enabled,
-            summary_response_lang=summary_response_lang,
-            summary_num_results=summary_num_results,
-            summary_prompt_name=summary_prompt_name,
-        )
-
-    def _query(self, query_bundle: QueryBundle) -> RESPONSE_TYPE:
-        with self.callback_manager.event(
-            CBEventType.QUERY, payload={EventPayload.QUERY_STR: query_bundle.query_str}
-        ) as query_event:
-            kwargs = (
-                {
-                    "summary_response_lang": self._summary_response_lang,
-                    "summary_num_results": self._summary_num_results,
-                    "summary_prompt_name": self._summary_prompt_name,
-                }
-                if self._summary_enabled
-                else {}
-            )
-            nodes, response = self._retriever._vectara_query(query_bundle, **kwargs)
-            query_event.on_end(payload={EventPayload.RESPONSE: response})
-        return Response(response=response, source_nodes=nodes)
