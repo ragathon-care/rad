@@ -41,7 +41,7 @@ class DiffbotQueryEngine(BaseQueryEngine):
         )
     
     def _diffbot_chat(self, query_bundle: QueryBundle) -> RESPONSE_TYPE:
-        from openai import OpenAI
+
         client = OpenAI(api_key=self._diffbot_api_key, base_url="https://llm.diffbot.com/rag/v1/")
         response = client.chat.completions.create(
             model="diffbot-medium",
@@ -63,6 +63,6 @@ class DiffbotQueryEngine(BaseQueryEngine):
             if self._retriever is None:
                 nodes, response = self._diffbot_chat(query_bundle)
             else:
-                nodes, response = self._retriever._query_enhanced_search(query_bundle, **kwargs)
+                nodes, response = self._retriever._query_enhanced_search(query_bundle)
             query_event.on_end(payload={EventPayload.RESPONSE: response})
         return Response(response=response, source_nodes=nodes)
