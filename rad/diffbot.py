@@ -1,7 +1,10 @@
 from openai import OpenAI
+import os
 
- client = OpenAI(api_key="YOUR_DIFFBOT_TOKEN", base_url="https://llm.diffbot.com/rag/v1/")
- response = client.chat.completions.create(
+diffbot_token = os.environ.get("DIFFBOT_TOKEN")
+
+client = OpenAI(api_key=diffbot_token, base_url="https://llm.diffbot.com/rag/v1/")
+response = client.chat.completions.create(
      model="diffbot-medium",
      messages=[
          {
@@ -12,4 +15,4 @@ from openai import OpenAI
      stream=False,
  )
 
- print(response.choices[0].message.content)
+print(response.choices[0].message.content)
