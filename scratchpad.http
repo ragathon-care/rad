@@ -1,6 +1,6 @@
 curl https://llm.diffbot.com/rag/v1/chat/completions \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer {{$dotenv %DIFFBOT_TOKEN}}" \
+  -H "Authorization: Bearer {{$dotenv %DIFFBOT_API_KEY}}" \
   -d '{
       "model": "diffbot-medium",
       "messages": [
