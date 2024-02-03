@@ -1,5 +1,5 @@
 import logging
-import json
+import os
 
 from typing import Any, Dict, List, Optional, Sequence
 
@@ -62,64 +62,21 @@ class DiffBotQueryEngine(BaseManagedIndex):
 
     def _get_api_key(self) -> dict:
         return {"token": self._diffbot_api_key}
-    
-    def _search_dql(self, query):
-        request: Dict[str, Any] = {}
-        request["type"] = "query"
-        request["query"] = query
-        request["size"] = self._api_max_items
-        request["cluster"] = "best"
-
-        api_url = "https://api.vectara.io/v1/index"
-
-        response = self._session.post(
-            headers=self._get_post_headers(),
-            url=api_url,
-            params=self._get_api_key(),
-            data=json.dumps(request),
-            timeout=self._api_timeout,
-            verify=True
-        )
-
-        status_code = response.status_code
-
-        result = response.json()
-
-        status_str = result["status"]["code"] if "status" in result else None
-        if status_code == 422:
-            return "UNPROCESSABLE_CONTENT"
-        elif status_code == 400:
-            return "BAD_REQUEST"
-        elif status_code == 500:
-            return "INTERNAL_ERROR"
-        else:
-            return "OK"
         
     def as_retriever(self, **kwargs: Any) -> BaseRetriever:
         """Return a Retriever for this managed index."""
-        from llama_index.indices.managed.vectara.retriever import VectaraRetriever
+        from rad.diffbot.retriever import DiffbotRetriever
 
-        return VectaraRetriever(self, **kwargs)
+        return DiffbotRetriever(self, **kwargs)
 
     def as_query_engine(self, **kwargs: Any) -> BaseQueryEngine:
         if kwargs.get("summary_enabled", True):
-            from llama_index.indices.managed.vectara.query import VectaraQueryEngine
+            from rad.diffbot.query import DiffbotQueryEngine
             
-            client = OpenAI(api_key=self._diffbot_api_key, base_url="https://llm.diffbot.com/rag/v1/")
-            response = client.chat.completions.create(
-                model="diffbot-medium",
-                messages=[
-                    {
-                        "role": "user",
-                        "content": "Who is the CEO of Twitter?"
-                    }
-                ],
-                stream=False,
-            )
-
             kwargs["summary_enabled"] = True
-            retriever = self.as_retriever(**kwargs)
-            return VectaraQueryEngine.from_args(retriever, **kwargs)  # type: ignore
+            # ignores retriever and uses diffbot's openai interface
+            return DiffbotQueryEngine.from_args(diffbot_api_key=self._diffbot_api_key, **kwargs)  
+        
         else:
             from llama_index.query_engine.retriever_query_engine import (
                 RetrieverQueryEngine,
@@ -127,8 +84,3 @@ class DiffBotQueryEngine(BaseManagedIndex):
 
             kwargs["retriever"] = self.as_retriever(**kwargs)
             return RetrieverQueryEngine.from_args(**kwargs)
-
-    def custom_query(self, query_str: str) -> STR_OR_RESPONSE_TYPE:
-        nodes = self.retriever.retrieve(query_str)
-        response_obj = self.response_synthesizer.synthesize(query_str, nodes)
-        return response_obj
