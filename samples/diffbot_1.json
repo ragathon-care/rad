@@ -1,0 +1,79 @@
+[
+  {
+    "diffbot_request": {
+      "name": "Twitter",
+      "extra_fields": [
+        "ceo"
+      ]
+    },
+    "diffbot_response": {
+      "status": 200,
+      "message": null,
+      "plugin_url": "https://llm.diffbot.com/api/v1/enhance_organization?name=Twitter&extra_fields=ceo",
+      "method": "get",
+      "content": {
+        "status": 200,
+        "message": null,
+        "type": "Organization",
+        "entity": {
+          "twitterUri": "twitter.com/Twitter",
+          "isAcquired": false,
+          "revenue": {
+            "currency": "USD",
+            "value": 5077000000.0
+          },
+          "logo": "https://llm.diffbot.com/img/J1Mo.jpg",
+          "foundingDate": {
+            "str": "d2006-01-01",
+            "precision": 3,
+            "timestamp": 1136073600000
+          },
+          "image": "https://llm.diffbot.com/img/O6Z6.jpg",
+          "wikipediaUri": "en.wikipedia.org/wiki/Twitter",
+          "diffbotUri": "http://diffbot.com/entity/E1v2UkreyPXm7leKR5WspGw",
+          "ipo": {
+            "date": {
+              "str": "d2013-11-07",
+              "precision": 3,
+              "timestamp": 1383782400000
+            },
+            "stockExchange": "nyse"
+          },
+          "capitalization": {
+            "currency": "USD",
+            "value": 25449001000.0
+          },
+          "name": "Twitter",
+          "totalInvestment": {
+            "currency": "USD",
+            "value": 12869191680.0
+          },
+          "linkedInUri": "linkedin.com/company/twitter",
+          "nbEmployees": 7500,
+          "isDissolved": false,
+          "description": "X, formerly and commonly referred to as Twitter, is a social media website based in the United States. With over 500 million users, it is one of the world's largest social networks. Users can share and post text messages, images, and videos known historically as \"tweets\". X also includes direct messaging, video and audio calling, bookmarks, lists and communities, and Spaces, a social audio feature. Users can vote on context added by approved users using the Community Notes feature. Although the service is now called X, the primary URL remains twitter.com , with the x.com domain name redirecting to that address.",
+          "homepageUri": "twitter.com",
+          "ceo": {
+            "name": "Linda Yaccarino",
+            "diffbotUri": "http://diffbot.com/entity/E2N5_3UXEPqiV0lSlA7JZNA"
+          },
+          "isPublic": false,
+          "remoteScore": 0.8633639,
+          "crunchbaseUri": "crunchbase.com/organization/twitter",
+          "location": {
+            "country": {
+              "name": "United States of America"
+            },
+            "city": {
+              "name": "San Francisco"
+            },
+            "region": {
+              "name": "California"
+            }
+          }
+        },
+        "articles": null
+      }
+    }
+  }
+]
