@@ -14,7 +14,6 @@ import { RenderConversations as RenderConversations } from "@/components/convers
 import { BiArrowBack } from "react-icons/bi";
 import { SecDocument } from "@/types/document";
 import { FiShare } from "react-icons/fi";
-import ShareLinkModal from "@/components/modals/ShareLinkModal";
 import { BsArrowUpCircle } from "react-icons/bs";
 import { useModal } from "@/hooks/utils/useModal";
 import useIsMobile from "@/hooks/utils/useIsMobile";
@@ -158,17 +157,6 @@ export default function Conversation() {
     <PdfFocusProvider>
       <div className="flex h-[100vh] w-full items-center justify-center">
         <div className="flex h-[100vh] w-[44vw] flex-col items-center border-r-2 bg-white">
-          <div className="flex h-[44px] w-full items-center justify-between border-b-2 ">
-            <div className="flex w-full items-center justify-between">
-              <button
-                onClick={toggleShareModal}
-                className="mr-3 flex items-center justify-center rounded-full border border-gray-400 p-1 px-3 text-gray-400 hover:bg-gray-15"
-              >
-                <div className="text-xs font-medium">Share</div>
-                <FiShare className="ml-1" size={12} />
-              </button>
-            </div>
-          </div>
           <div className="flex max-h-[calc(100vh-114px)] w-[44vw] flex-grow flex-col overflow-scroll ">
             <RenderConversations
               messages={messages}
@@ -197,10 +185,6 @@ export default function Conversation() {
         <div className="h-[100vh] w-max">
           <DisplayMultiplePdfs pdfs={selectedDocuments} />
         </div>
-        <ShareLinkModal
-          isOpen={isShareModalOpen}
-          toggleModal={toggleShareModal}
-        />
       </div>
     </PdfFocusProvider>
   );

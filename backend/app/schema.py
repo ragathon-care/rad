@@ -167,4 +167,4 @@ class Conversation(Base):
 
 
 class ConversationCreate(BaseModel):
-    document_ids: List[UUID]
+    pass
