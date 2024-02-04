@@ -43,12 +43,8 @@ async def create_conversation(
     db: AsyncSession, convo_payload: schema.ConversationCreate
 ) -> schema.Conversation:
     conversation = Conversation()
-    convo_doc_db_objects = [
-        ConversationDocument(document_id=doc_id, conversation=conversation)
-        for doc_id in convo_payload.document_ids
-    ]
+   
     db.add(conversation)
-    db.add_all(convo_doc_db_objects)
     await db.commit()
     await db.refresh(conversation)
     return await fetch_conversation_with_messages(db, conversation.id)

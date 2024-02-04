@@ -44,10 +44,9 @@ class BackendClient {
     return res;
   }
 
-  public async createConversation(documentIds: string[]): Promise<string> {
+  public async createConversation(): Promise<string> {
     const endpoint = "api/conversation/";
-    const payload = { document_ids: documentIds };
-    const res = await this.post(endpoint, payload);
+    const res = await this.post(endpoint);
     const data = (await res.json()) as CreateConversationPayload;
 
     return data.id;
