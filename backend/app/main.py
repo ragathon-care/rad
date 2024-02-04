@@ -20,7 +20,7 @@ from contextlib import asynccontextmanager
 from app.chat.pg_vector import get_vector_store_singleton, CustomPGVectorStore
 
 logger = logging.getLogger(__name__)
-
+ 
 
 def check_current_head(alembic_cfg: Config, connectable: Engine) -> bool:
     directory = script.ScriptDirectory.from_config(alembic_cfg)
