@@ -68,8 +68,8 @@ OPENAI_CHAT_LLM_NAME = "gpt-3.5-turbo-0613"
 
 def get_s3_fs() -> AsyncFileSystem:
     s3 = s3fs.S3FileSystem(
-        key=settings.AWS_KEY,
-        secret=settings.AWS_SECRET,
+        key=settings.MINIO_ACCESS,
+        secret=settings.MINIO_SECRET,
         endpoint_url=settings.S3_ENDPOINT_URL,
     )
     if not (settings.RENDER or s3.exists(settings.S3_BUCKET_NAME)):
