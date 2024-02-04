@@ -40,7 +40,7 @@
     "@types/lodash": "^4.14.195",
     "@types/lodash.debounce": "^4.0.7",
     "@types/md5": "^2.3.2",
-    "@types/node": "^18.16.0",
+    "@types/node": "^20.11.16",
     "@types/prettier": "^2.7.2",
     "@types/react": "^18.2.6",
     "@types/react-dom": "^18.2.4",
