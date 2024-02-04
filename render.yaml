@@ -11,14 +11,17 @@ services:
   # RAD! app frontend and backend
   ###############################################################
   - type: web
-    name: rad-frontend
-    env: static
-    buildCommand: yarn; yarn build; yarn next export
-    staticPublishPath: out
-    rootDir: ./frontend    
+    name: next-js
+    env: node
+    plan: starter
+    buildCommand: yarn; yarn build
+    startCommand: yarn start
+    autoDeploy: false
     envVars:
       - key: NODE_ENV
         value: production
+      - key: NEXT_PUBLIC_BACKEND_URL
+        sync: false
   - type: web
     name: rad-backend
     runtime: docker
@@ -87,7 +90,7 @@ services:
   # to sync db migrations
   ###############################################################
   - type: cron
-    name: llama-app-cron
+    name: rad-cron
     runtime: docker
     repo: https://github.com/ragathon-care/rad.git
     region: oregon
@@ -113,7 +116,7 @@ envVarGroups:
     - key: LOG_LEVEL
       value: INFO
     - key: BACKEND_CORS_ORIGINS
-      value: '["http://localhost", "http://localhost:8000", "http://localhost:3000", "http://127.0.0.1:3000", "https://llama-app-backend.onrender.com", "https://llama-app-frontend.vercel.app", "http://secinsights.ai", "http://www.secinsights.ai", "https://secinsights.ai", "https://www.secinsights.ai"]'
+      value: '["http://localhost", "http://localhost:8000", "http://localhost:3000", "http://127.0.0.1:3000", "https://rad-backend.onrender.com", "https://rad-frontend.onrender.com", "http://secinsights.ai", "http://www.secinsights.ai", "https://secinsights.ai", "https://www.secinsights.ai"]'
     # S3_BUCKET_NAME is the bucket used for the StorageContext of the backend's LlamaIndex chat engine
     - key: S3_BUCKET_NAME
       value: rad-objects
