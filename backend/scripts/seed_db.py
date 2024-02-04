@@ -9,22 +9,22 @@ import upsert_db_sec_documents
 import download_sec_pdf
 from download_sec_pdf import DEFAULT_CIKS, DEFAULT_FILING_TYPES
 import seed_storage_context
-
+from minio import Minio
 
 def copy_to_s3(dir_path: str, s3_bucket: str = settings.S3_ASSET_BUCKET_NAME):
     """
     Copy all files in dir_path to S3.
     """
-    s3 = s3fs.S3FileSystem(
+    client = Minio(
         key=settings.MINIO_ACCESS,
         secret=settings.MINIO_SECRET,
         endpoint_url=settings.S3_ENDPOINT_URL,
     )
 
-    if not (settings.RENDER or s3.exists(s3_bucket)):
-        s3.mkdir(s3_bucket)
+    if not (settings.RENDER or client.bucket_exists(s3_bucket)):
+        client.make_bucket(s3_bucket)
 
-    s3.put(dir_path, s3_bucket, recursive=True)
+    client.fput_object(s3_bucket, dir_path, dir_path)
 
 
 async def async_seed_db(
