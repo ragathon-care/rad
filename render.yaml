@@ -21,7 +21,10 @@ services:
       - key: NODE_ENV
         value: production
       - key: NEXT_PUBLIC_BACKEND_URL
-        sync: false
+        fromService:
+          type: web
+          name: rad-backend
+          property: hostport
   - type: web
     name: rad-backend
     runtime: docker
