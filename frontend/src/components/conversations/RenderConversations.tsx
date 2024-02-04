@@ -1,16 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
-import { MESSAGE_STATUS, MessageSubProcess, ROLE } from "~/types/conversation";
-import type { Citation } from "~/types/conversation";
-import type { Message, SubQuestion } from "~/types/conversation";
-import { LoadingSpinner } from "~/components/basics/Loading";
+import { MESSAGE_STATUS, MessageSubProcess, ROLE } from "@/types/conversation";
+import type { Citation } from "@/types/conversation";
+import type { Message, SubQuestion } from "@/types/conversation";
+import { LoadingSpinner } from "@/components/basics/Loading";
 import { PiCaretDownBold } from "react-icons/pi";
 import { HiOutlineChatAlt2 } from "react-icons/hi";
 
-import { usePdfFocus } from "~/context/pdf";
+import { usePdfFocus } from "@/context/pdf";
 import { AiFillExclamationCircle, AiOutlineLink } from "react-icons/ai";
-import { SecDocument } from "~/types/document";
-import { borderColors } from "~/utils/colors";
-import { formatDisplayDate } from "~/utils/timezone";
+import { SecDocument } from "@/types/document";
+import { borderColors } from "@/utils/colors";
+import { formatDisplayDate } from "@/utils/timezone";
 
 interface CitationDisplayProps {
   citation: Citation;
@@ -23,9 +23,8 @@ const CitationDisplay: React.FC<CitationDisplayProps> = ({ citation }) => {
 
   return (
     <div
-      className={`mx-1.5 mb-2 min-h-[25px] min-w-[160px] cursor-pointer rounded border-l-8 bg-gray-00 p-1 hover:bg-gray-15  ${
-        borderColors[citation.color]
-      }`}
+      className={`mx-1.5 mb-2 min-h-[25px] min-w-[160px] cursor-pointer rounded border-l-8 bg-gray-00 p-1 hover:bg-gray-15  ${borderColors[citation.color]
+        }`}
       onClick={() =>
         handleCitationClick(citation.documentId, citation.pageNumber)
       }
@@ -108,67 +107,67 @@ const SubProcessDisplay: React.FC<SubProcessDisplayProps> = ({
           <div className="ml-4 border-l border-l-gray-30 pb-1 pl-4 font-nunito text-[11px] font-light text-gray-60">
             <div>Question Received</div>
             {subQuestions.length > 0 && (
-                <div
-                  key={`${messageId}-sub-process`}
-                  className="text-gray-60"
-                >
-                  <div>
-                    {subQuestions.map(({subQuestion, subQuestionIndex, subProcessIndex}) => {
-                      const hasCitations = !!subQuestion.citations;
-                      return (
-                        <div
-                          key={`${messageId}-${subProcessIndex}-${subQuestionIndex}`}
-                        >
-                          Generated Sub Query #{subQuestionIndex + 1}{" "}
-                          <div className="flex w-11/12 flex-col rounded border">
-                            <div className="rounded-t border-b bg-gray-00 p-2 font-bold text-gray-90">
-                              {subQuestion.question}
-                            </div>
-                            <div className="overflow-scroll p-2 text-[11px] font-light">
-                              {subQuestion.answer}
-                            </div>
-
-                            {hasCitations && (
-                              <div className=" mr-2 flex w-full overflow-x-scroll pl-2 ">
-                                {subQuestion.citations?.map(
-                                  (citation, citationIndex) => {
-                                    // get snippet and dispaly date from documentId
-                                    const citationDocument = documents.find(
-                                      (doc) => doc.id === citation.document_id
-                                    );
-                                    if (!citationDocument) {
-                                      return;
-                                    }
-                                    const yearDisplay =
-                                      citationDocument.quarter
-                                        ? `${citationDocument.year} Q${citationDocument.quarter}`
-                                        : `${citationDocument.year}`;
-                                    return (
-                                      <CitationDisplay
-                                        key={`${messageId}-${subProcessIndex}-${subQuestionIndex}-${citationIndex}`}
-                                        citation={
-                                          {
-                                            documentId: citation.document_id,
-                                            snippet: citation.text,
-                                            pageNumber: citation.page_number,
-                                            ticker: citationDocument?.ticker,
-                                            displayDate: yearDisplay,
-                                            color: citationDocument.color,
-                                          } as Citation
-                                        }
-                                      />
-                                    );
-                                  }
-                                )}
-                              </div>
-                            )}
+              <div
+                key={`${messageId}-sub-process`}
+                className="text-gray-60"
+              >
+                <div>
+                  {subQuestions.map(({ subQuestion, subQuestionIndex, subProcessIndex }) => {
+                    const hasCitations = !!subQuestion.citations;
+                    return (
+                      <div
+                        key={`${messageId}-${subProcessIndex}-${subQuestionIndex}`}
+                      >
+                        Generated Sub Query #{subQuestionIndex + 1}{" "}
+                        <div className="flex w-11/12 flex-col rounded border">
+                          <div className="rounded-t border-b bg-gray-00 p-2 font-bold text-gray-90">
+                            {subQuestion.question}
                           </div>
+                          <div className="overflow-scroll p-2 text-[11px] font-light">
+                            {subQuestion.answer}
+                          </div>
+
+                          {hasCitations && (
+                            <div className=" mr-2 flex w-full overflow-x-scroll pl-2 ">
+                              {subQuestion.citations?.map(
+                                (citation, citationIndex) => {
+                                  // get snippet and dispaly date from documentId
+                                  const citationDocument = documents.find(
+                                    (doc) => doc.id === citation.document_id
+                                  );
+                                  if (!citationDocument) {
+                                    return;
+                                  }
+                                  const yearDisplay =
+                                    citationDocument.quarter
+                                      ? `${citationDocument.year} Q${citationDocument.quarter}`
+                                      : `${citationDocument.year}`;
+                                  return (
+                                    <CitationDisplay
+                                      key={`${messageId}-${subProcessIndex}-${subQuestionIndex}-${citationIndex}`}
+                                      citation={
+                                        {
+                                          documentId: citation.document_id,
+                                          snippet: citation.text,
+                                          pageNumber: citation.page_number,
+                                          ticker: citationDocument?.ticker,
+                                          displayDate: yearDisplay,
+                                          color: citationDocument.color,
+                                        } as Citation
+                                      }
+                                    />
+                                  );
+                                }
+                              )}
+                            </div>
+                          )}
                         </div>
-                      );
-                    })}
-                  </div>
+                      </div>
+                    );
+                  })}
                 </div>
-              )
+              </div>
+            )
             }
           </div>
           {showSpinner && (
@@ -211,7 +210,7 @@ const UserDisplay: React.FC<UserDisplayProps> = ({ message, showLoading }) => {
               subProcesses={[]}
               isOpen={true}
               // eslint-disable-next-line @typescript-eslint/no-empty-function
-              toggleOpen={() => {}}
+              toggleOpen={() => { }}
               showSpinner={true}
               documents={[]}
             />

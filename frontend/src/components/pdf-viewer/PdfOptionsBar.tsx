@@ -5,9 +5,9 @@ import {
   HiMiniMagnifyingGlassPlus,
 } from "react-icons/hi2";
 import { PiCaretDownBold, PiCaretUpBold } from "react-icons/pi";
-import { zoomLevels } from "~/hooks/usePdfViewer";
-import { SecDocument } from "~/types/document";
-import { borderColors } from "~/utils/colors";
+import { zoomLevels } from "@/hooks/usePdfViewer";
+import { SecDocument } from "@/types/document";
+import { borderColors } from "@/utils/colors";
 
 interface PDFOptionsBarProps {
   file: SecDocument;
@@ -74,9 +74,8 @@ export const PDFOptionsBar: React.FC<PDFOptionsBarProps> = ({
     >
       <div className="ml-3 flex w-1/2 items-center justify-start ">
         <div
-          className={`flex items-center justify-center border-l-4 pl-2 ${
-            borderColors[file.color]
-          } `}
+          className={`flex items-center justify-center border-l-4 pl-2 ${borderColors[file.color]
+            } `}
         >
           <div className="text font-bold">{file.ticker}</div>
           <div className="ml-2">

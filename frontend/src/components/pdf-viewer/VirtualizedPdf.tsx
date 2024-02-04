@@ -16,15 +16,15 @@ import {
   PDF_SIDEBAR_SIZE_PX,
   PDF_WIDTH_PERCENTAGE,
   VERTICAL_GUTTER_SIZE_PX,
-} from "~/components/pdf-viewer/pdfDisplayConstants";
+} from "@/components/pdf-viewer/pdfDisplayConstants";
 
-import { SecDocument as PdfDocument } from "~/types/document";
+import { SecDocument as PdfDocument } from "@/types/document";
 
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
-import { usePdfFocus } from "~/context/pdf";
-import { multiHighlight } from "~/utils/multi-line-highlight";
+import { usePdfFocus } from "@/context/pdf";
+import { multiHighlight } from "@/utils/multi-line-highlight";
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
 const pdfjsOptions = pdfjs.GlobalWorkerOptions;
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access

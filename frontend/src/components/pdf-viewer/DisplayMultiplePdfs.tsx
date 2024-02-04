@@ -1,8 +1,8 @@
-import { ViewPdf } from "~/components/pdf-viewer/ViewPdf";
-import { useMultiplePdfs } from "../../../../tmp-frontend/src/hooks/useMultiplePdfs";
-import { SecDocument } from "~/types/document";
+import { ViewPdf } from "@/components/pdf-viewer/ViewPdf";
+import { useMultiplePdfs } from "@/hooks/useMultiplePdfs";
+import { SecDocument } from "@/types/document";
 import cx from "classnames";
-import { borderColors } from "~/utils/colors";
+import { borderColors } from "@/utils/colors";
 
 interface DisplayMultiplePdfsProps {
   pdfs: SecDocument[];
@@ -34,8 +34,8 @@ export const DisplayMultiplePdfs: React.FC<DisplayMultiplePdfsProps> = ({
               <button
                 onClick={() => handlePdfFocus(file)}
                 className={`group flex h-[80px] w-[80px] items-end  justify-start border px-2 py-1 font-nunito text-sm font-bold ${isActivePdf(file)
-                    ? "border-l-0 bg-gray-pdf"
-                    : "bg-white font-light text-gray-60 "
+                  ? "border-l-0 bg-gray-pdf"
+                  : "bg-white font-light text-gray-60 "
                   }`}
               >
                 <div

@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { GroupBase } from "react-select";
-import Select from "react-select/dist/declarations/src/Select";
 import { SecDocument, DocumentType, Ticker } from "@/types/document";
 import type { SelectOption } from "@/types/selection";
+import type { SelectInstance } from "react-select";
+
 import {
   findDocumentById,
   getAllTickers,
@@ -132,7 +133,7 @@ export const useDocumentSelector = () => {
     useState(false);
 
   const [focusYear, setFocusYear] = useState(false);
-  const yearFocusRef = useRef<Select<
+  const yearFocusRef = useRef<SelectInstance<
     SelectOption,
     false,
     GroupBase<SelectOption>
@@ -146,7 +147,7 @@ export const useDocumentSelector = () => {
   }, [focusYear]);
 
   const [focusDocumentType, setFocusDocumentType] = useState(false);
-  const documentTypeFocusRef = useRef<Select<
+  const documentTypeFocusRef = useRef<SelectInstance<
     SelectOption,
     false,
     GroupBase<SelectOption>

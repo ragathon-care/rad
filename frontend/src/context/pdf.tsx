@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext } from "react";
-import type { Citation } from "~/types/conversation";
+import type { Citation } from "@/types/conversation";
 
 interface PdfFocusState {
   documentId: string;

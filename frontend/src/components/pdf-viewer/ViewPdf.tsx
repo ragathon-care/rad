@@ -1,9 +1,9 @@
 // ViewPdf.tsx
-import usePDFViewer from "~/hooks/usePdfViewer";
+import usePDFViewer from "@/hooks/usePdfViewer";
 import { PDFOptionsBar } from "./PdfOptionsBar";
 import React from "react";
 import MemoizedVirtualizedPDF from "./VirtualizedPdf";
-import { SecDocument } from "~/types/document";
+import { SecDocument } from "@/types/document";
 
 interface ViewPdfProps {
   file: SecDocument;
