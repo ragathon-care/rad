@@ -1,25 +1,36 @@
 previewsEnabled: true
 databases:
-  - name: llama-app-db
-    databaseName: llama_app_db
+  ###############################################################
+  # to sync db migrations
+  ###############################################################
+  - name: rad-postgres
+    databaseName: rad
     plan: pro
-    previewPlan: starter
 
 services:
-  # A Docker web service
-  # Docs for Render blueprints:
-  # https://render.com/docs/blueprint-spec
+  ###############################################################
+  # RAD! app frontend and backend
+  ###############################################################
   - type: web
-    name: llama-app-backend
+    name: rad-frontend
+    env: static
+    buildCommand: yarn; yarn build; yarn next export
+    staticPublishPath: out
+    rootDir: ./frontend    
+    envVars:
+      - key: NODE_ENV
+        value: production
+  - type: web
+    name: rad-backend
     runtime: docker
-    repo: https://github.com/run-llama/sec-insights.git
+    repo: https://github.com/ragathon-care/rad.git
     region: oregon
     plan: standard
     rootDir: ./backend
     # https://render.com/docs/blueprint-spec#scaling
     scaling:
-      minInstances: 2
-      maxInstances: 10
+      minInstances: 1
+      maxInstances: 2
       targetMemoryPercent: 75 # optional if targetCPUPercent is set (valid: 1-90)
       targetCPUPercent: 75 # optional if targetMemory is set (valid: 1-90)
     healthCheckPath: /api/health/
@@ -27,17 +38,60 @@ services:
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: llama-app-db
+          name: rad-postgres
           property: connectionString
       - fromGroup: general-settings
       - fromGroup: prod-web-secrets
       - fromGroup: preview-web-secrets
-  # A Docker cron service
-  # Runs the seed_db job which should only be upserts and otherwise idempotent
+
+  ###############################################################
+  # Object store and console for quick review
+  ###############################################################
+  - type: web
+    name: minio-server
+    healthCheckPath: /minio/health/live
+    runtime: image
+    image:
+      url: docker.io/minio/minio:RELEASE.2023-08-04T17-40-21Z.hotfix.04968f7ec
+    dockerCommand: minio server /data
+    autoDeploy: false
+    disk:
+      name: data
+      mountPath: /data
+    envVars:
+      - key: MINIO_ROOT_USER
+        generateValue: true
+      - key: MINIO_ROOT_PASSWORD
+        generateValue: true
+      - key: MINIO_BROWSER
+        value: "off"
+  - type: web
+    name: minio-console
+    runtime: image
+    image:
+      url: minio/console:v0.30.0
+    dockerCommand: /bin/bash -c CONSOLE_MINIO_SERVER=https://$MINIO_HOST.onrender.com ./console server --port $PORT
+    autoDeploy: false
+    envVars:
+      - key: CONSOLE_PBKDF_PASSPHRASE
+        generateValue: true
+      - key: CONSOLE_PBKDF_SALT
+        generateValue: true
+      - key: PORT
+        value: 9090
+      - key: MINIO_HOST
+        fromService:
+          name: minio-server
+          type: web
+          property: host
+  
+  ###############################################################
+  # to sync db migrations
+  ###############################################################
   - type: cron
     name: llama-app-cron
     runtime: docker
-    repo: https://github.com/run-llama/sec-insights.git
+    repo: https://github.com/ragathon-care/rad.git
     region: oregon
     plan: standard
     rootDir: ./backend
@@ -47,11 +101,13 @@ services:
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: llama-app-db
+          name: rad-postgres
           property: connectionString
       - fromGroup: general-settings
       - fromGroup: prod-web-secrets
       - fromGroup: preview-web-secrets
+
+
 envVarGroups:
 - name: general-settings
   envVars:
@@ -65,12 +121,12 @@ envVarGroups:
       value: '["http://localhost", "http://localhost:8000", "http://localhost:3000", "http://127.0.0.1:3000", "https://llama-app-backend.onrender.com", "https://llama-app-frontend.vercel.app", "http://secinsights.ai", "http://www.secinsights.ai", "https://secinsights.ai", "https://www.secinsights.ai"]'
     # S3_BUCKET_NAME is the bucket used for the StorageContext of the backend's LlamaIndex chat engine
     - key: S3_BUCKET_NAME
-      value: llama-app-backend-prod
-      previewValue: llama-app-backend-preview
+      value: rad-objects
+      previewValue: rad-objects-preview
     # S3_ASSET_BUCKET_NAME is the bucket used for app assets (e.g. document PDFs)
     - key: S3_ASSET_BUCKET_NAME
-      value: llama-app-web-assets-prod
-      previewValue: llama-app-web-assets-preview
+      value: rad-web-assets-prod
+      previewValue: rad-web-assets-preview
     - key: CDN_BASE_URL
       value: https://d687lz8k56fia.cloudfront.net
       previewValue: https://dl94gqvzlh4k8.cloudfront.net
@@ -86,6 +142,14 @@ envVarGroups:
     - key: AWS_SECRET
       sync: false
     - key: POLYGON_IO_API_KEY
+      sync: false
+    - key: VECTARA_API_KEY
+      sync: false
+    - key: VECTARA_CORPUS_ID
+      sync: false
+    - key: VECTARA_CUSTOMER_ID
+      sync: false
+    - key: DIFFBOT_API_KEY
       sync: false
 - name: preview-web-secrets
   envVars:
