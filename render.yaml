@@ -1,4 +1,3 @@
-previewsEnabled: true
 databases:
   ###############################################################
   # to sync db migrations
@@ -42,7 +41,6 @@ services:
           property: connectionString
       - fromGroup: general-settings
       - fromGroup: prod-web-secrets
-      - fromGroup: preview-web-secrets
 
   ###############################################################
   # Object store and console for quick review
@@ -105,7 +103,6 @@ services:
           property: connectionString
       - fromGroup: general-settings
       - fromGroup: prod-web-secrets
-      - fromGroup: preview-web-secrets
 
 
 envVarGroups:
@@ -113,23 +110,18 @@ envVarGroups:
   envVars:
     - key: IS_PREVIEW_ENV
       value: false
-      previewValue: true
     - key: LOG_LEVEL
       value: INFO
-      previewValue: DEBUG
     - key: BACKEND_CORS_ORIGINS
       value: '["http://localhost", "http://localhost:8000", "http://localhost:3000", "http://127.0.0.1:3000", "https://llama-app-backend.onrender.com", "https://llama-app-frontend.vercel.app", "http://secinsights.ai", "http://www.secinsights.ai", "https://secinsights.ai", "https://www.secinsights.ai"]'
     # S3_BUCKET_NAME is the bucket used for the StorageContext of the backend's LlamaIndex chat engine
     - key: S3_BUCKET_NAME
       value: rad-objects
-      previewValue: rad-objects-preview
     # S3_ASSET_BUCKET_NAME is the bucket used for app assets (e.g. document PDFs)
     - key: S3_ASSET_BUCKET_NAME
       value: rad-web-assets-prod
-      previewValue: rad-web-assets-preview
     - key: CDN_BASE_URL
       value: https://d687lz8k56fia.cloudfront.net
-      previewValue: https://dl94gqvzlh4k8.cloudfront.net
     - key: SENTRY_DSN
       sync: false
 - name: prod-web-secrets
@@ -150,16 +142,4 @@ envVarGroups:
     - key: VECTARA_CUSTOMER_ID
       sync: false
     - key: DIFFBOT_API_KEY
-      sync: false
-- name: preview-web-secrets
-  envVars:
-    # All env vars in this group should be prefixed with "PREVIEW_"
-    # Manually add a preview value for PREVIEW_OPENAI_API_KEY in Render dashboard
-    - key: PREVIEW_OPENAI_API_KEY
-      sync: false
-    - key: PREVIEW_AWS_KEY
-      sync: false
-    - key: PREVIEW_AWS_SECRET
-      sync: false
-    - key: PREVIEW_POLYGON_IO_API_KEY
       sync: false
