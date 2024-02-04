@@ -13,6 +13,7 @@ services:
   - type: web
     name: rad-frontend
     env: node
+    rootDir: ./frontend
     plan: starter
     buildCommand: yarn; yarn build
     startCommand: yarn start
