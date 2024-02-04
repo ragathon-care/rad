@@ -278,6 +278,10 @@ async def get_chat_engine(
                 vectara_query_mode="mmr",
                 mmr_k=50,
                 mmr_diversity_bias=0.3,
+            ),
+            metadata=ToolMetadata(
+                name='vectara',
+                description='vectara embeddings',
             )
         )
     ]

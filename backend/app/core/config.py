@@ -75,11 +75,11 @@ class Settings(PreviewPrefixedSettings):
     S3_ASSET_BUCKET_NAME: str
     CDN_BASE_URL: str
     VECTOR_STORE_TABLE_NAME: str = "pg_vector_store"
-    SENTRY_DSN: Optional[str]
     RENDER_GIT_COMMIT: Optional[str]
     LOADER_IO_VERIFICATION_STR: str = "loaderio-e51043c635e0f4656473d3570ae5d9ec"
-    SEC_EDGAR_COMPANY_NAME: str = "YourOrgName"
-    SEC_EDGAR_EMAIL: EmailStr = "you@example.com"
+    VECTARA_API_KEY: str = os.environ.get("VECTARA_API_KEY")
+    VECTARA_CORPUS_ID: str = os.environ.get("VECTARA_CORPUS_ID")
+    VECTARA_CUSTOMER_ID: str = os.environ.get("VECTARA_CUSTOMER_ID")
 
     # BACKEND_CORS_ORIGINS is a JSON-formatted list of origins
     # e.g: '["http://localhost", "http://localhost:4200", "http://localhost:3000", \
