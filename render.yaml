@@ -13,10 +13,11 @@ services:
   - type: web
     name: rad-frontend
     env: node
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
     rootDir: ./frontend
     plan: starter
-    buildCommand: yarn; yarn build --debug
-    startCommand: yarn start
     autoDeploy: false
     envVars:
       - key: NODE_ENV
