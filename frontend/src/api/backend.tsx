@@ -49,7 +49,7 @@ class BackendClient {
 
   public async createConversation(): Promise<string> {
     const endpoint = "api/conversation/";
-    const res = await this.post(endpoint);
+    const res = await this.post(endpoint, {});
     const data = (await res.json()) as CreateConversationPayload;
 
     return data.id;

@@ -178,6 +178,10 @@ async def build_doc_id_to_index_map(
             index.set_index_id(str(doc.id))
             index.storage_context.persist(persist_dir=persist_dir, fs=fs)
             doc_id_to_index[str(doc.id)] = index
+
+    from llama_index.indices import VectaraIndex
+    index = VectaraIndex()
+
     return doc_id_to_index
 
 
@@ -265,6 +269,12 @@ async def get_chat_engine(
         for doc_id, index in doc_id_to_index.items()
     ]
 
+    vector_query_engine_tools += [
+        QueryEngineTool(
+            query_engine=VectaraIndex().as_query_engine()
+        )
+    ]
+
     response_synth = get_custom_response_synth(service_context, conversation.documents)
 
     qualitative_question_engine = SubQuestionQueryEngine.from_defaults(
@@ -275,19 +285,6 @@ async def get_chat_engine(
         use_async=True,
     )
 
-    api_query_engine_tools = [
-        get_api_query_engine_tool(doc, service_context)
-        for doc in conversation.documents
-        if DocumentMetadataKeysEnum.SEC_DOCUMENT in doc.metadata_map
-    ]
-
-    quantitative_question_engine = SubQuestionQueryEngine.from_defaults(
-        query_engine_tools=api_query_engine_tools,
-        service_context=service_context,
-        response_synthesizer=response_synth,
-        verbose=settings.VERBOSE,
-        use_async=True,
-    )
 
     top_level_sub_tools = [
         QueryEngineTool(
@@ -295,18 +292,8 @@ async def get_chat_engine(
             metadata=ToolMetadata(
                 name="qualitative_question_engine",
                 description="""
-A query engine that can answer qualitative questions about a set of SEC financial documents that the user pre-selected for the conversation.
-Any questions about company-related headwinds, tailwinds, risks, sentiments, or administrative information should be asked here.
-""".strip(),
-            ),
-        ),
-        QueryEngineTool(
-            query_engine=quantitative_question_engine,
-            metadata=ToolMetadata(
-                name="quantitative_question_engine",
-                description="""
-A query engine that can answer quantitative questions about a set of SEC financial documents that the user pre-selected for the conversation.
-Any questions about company-related financials or other metrics should be asked here.
+A query engine that can answer qualitative questions about a set of disability servicing documents.
+Any questions about disability services, disability assistance, or administrative information should be asked here.
 """.strip(),
             ),
         ),
