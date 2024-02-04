@@ -3,6 +3,7 @@ import type { Message } from "@/types/conversation";
 import type { BackendDocument } from "@/types/backend/document";
 import { SecDocument } from "@/types/document";
 import { fromBackendDocumentToFrontend } from "./utils/documents";
+import path from 'path';
 
 interface CreateConversationPayload {
   id: string;
@@ -21,7 +22,8 @@ interface GetConversationReturnType {
 
 class BackendClient {
   private async get(endpoint: string) {
-    const url = backendUrl + endpoint;
+    const url = new URL(endpoint, backendUrl).toString(); // backendUrl + endpoint;
+    console.log(url)
     const res = await fetch(url);
 
     if (!res.ok) {
@@ -31,7 +33,8 @@ class BackendClient {
   }
 
   private async post(endpoint: string, body?: any) {
-    const url = backendUrl + endpoint;
+    const url = new URL(endpoint, backendUrl).toString(); // backendUrl + endpoint;
+    console.log(url)
     const res = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
