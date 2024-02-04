@@ -6,17 +6,18 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-RUN yarn set version stable; yarn install;
+COPY .yarn ./.yarn
 
 # Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* .yarnrc.yml* .pnp.cjs* ./
-RUN yarn --immutable
+RUN yarn install --immutable
 
 
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
-COPY --from=deps /app/.pnp.cjs ./.pnp.cjs
+COPY --from=deps /app/node_modules ./node_modules
+# COPY --from=deps /app/.yarn ./.yarn
 COPY . .
 
 RUN yarn build
