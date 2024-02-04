@@ -18,7 +18,13 @@ curl https://llm.diffbot.com/rag/v1/chat/completions \
 
 ###
 
-POST https://{{$dotenv %NEXT_PUBLIC_CODESPACE_NAME}}-8000.app.github.dev/api/conversations HTTP/1.1
+POST https://{{$dotenv %NEXT_PUBLIC_CODESPACE_NAME}}-8000.app.github.dev/api/conversation HTTP/1.1
+content-type: application/json
+
+{}
+
+### 
+POST http://localhost:8000/api/conversation HTTP/1.1
 content-type: application/json
 
 {}

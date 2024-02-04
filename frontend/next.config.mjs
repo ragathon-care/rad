@@ -7,8 +7,6 @@ const nextConfig = {
     },
     env: {
         NEXT_PUBLIC_BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL,
-        NEXT_PUBLIC_CODESPACE_NAME: process.env.CODESPACE_NAME,
-        NEXT_PUBLIC_CODESPACES: process.env.CODESPACES,   
     }
 };
 
