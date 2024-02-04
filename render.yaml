@@ -137,9 +137,9 @@ envVarGroups:
     # Manually add a prod value for OPENAI_API_KEY in Render dashboard
     - key: OPENAI_API_KEY
       sync: false
-    - key: AWS_KEY
+    - key: MINIO_ACCESS
       sync: false
-    - key: AWS_SECRET
+    - key: MINIO_SECRET
       sync: false
     - key: POLYGON_IO_API_KEY
       sync: false

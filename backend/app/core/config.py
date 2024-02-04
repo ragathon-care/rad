@@ -51,9 +51,6 @@ class PreviewPrefixedSettings(BaseSettings):
     """
 
     OPENAI_API_KEY: str
-    AWS_KEY: str
-    AWS_SECRET: str
-    POLYGON_IO_API_KEY: str
 
     class Config(AppConfig):
         env_prefix = "PREVIEW_" if is_pull_request or is_preview_env else ""
