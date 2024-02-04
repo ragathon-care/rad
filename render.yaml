@@ -26,7 +26,7 @@ services:
         fromService:
           type: web
           name: rad-backend
-          property: hostport
+          property: host
   - type: web
     name: rad-backend
     runtime: docker

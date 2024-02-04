@@ -4,6 +4,10 @@ from typing import List, Union, Optional
 from pydantic import BaseSettings, AnyHttpUrl, EmailStr, validator
 from multiprocessing import cpu_count
 
+from dotenv import load_dotenv
+
+if not os.environ.get("RENDER"):
+    load_dotenv(dotenv_path='../.env')  
 
 class AppConfig(BaseSettings.Config):
     """
