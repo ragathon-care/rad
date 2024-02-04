@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { PdfFocusProvider } from "@/context/pdf";
 
 import type { ChangeEvent } from "react";
@@ -19,8 +19,7 @@ import { useModal } from "@/hooks/utils/useModal";
 import useIsMobile from "@/hooks/utils/useIsMobile";
 
 export default function Conversation() {
-  const searchParams = useSearchParams();
-  const id = searchParams.get('id');
+  const { id } = useParams<{ id: string }>();
   const router = useRouter()
 
   const { isOpen: isShareModalOpen, toggleModal: toggleShareModal } =
@@ -38,6 +37,7 @@ export default function Conversation() {
   const textFocusRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
+    
     // router can have multiple query params which would then return string[]
     if (id && typeof id === "string") {
       setConversationId(id);
