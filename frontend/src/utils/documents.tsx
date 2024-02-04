@@ -1,5 +1,5 @@
-import type { SecDocument, Ticker, DocumentType } from "~/types/document";
-import { SelectOption } from "~/types/selection";
+import type { SecDocument, Ticker, DocumentType } from "@/types/document";
+import { SelectOption } from "@/types/selection";
 
 export function getAllTickers(documents: SecDocument[]): Ticker[] {
   const result: Ticker[] = [];

@@ -1,7 +1,7 @@
-import { DocumentType } from "~/types/document";
-import type { SecDocument } from "~/types/document";
+import { DocumentType } from "@/types/document";
+import type { SecDocument } from "@/types/document";
 
-import type { SelectOption } from "~/types/selection";
+import type { SelectOption } from "@/types/selection";
 import { filterByTickerAndType } from "./documents";
 
 export const documentTypeOptions = [

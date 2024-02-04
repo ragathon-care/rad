@@ -1,7 +1,7 @@
-import { backendUrl } from "~/config";
-import type { Message } from "~/types/conversation";
-import type { BackendDocument } from "~/types/backend/document";
-import { SecDocument } from "~/types/document";
+import { backendUrl } from "@/config";
+import type { Message } from "@/types/conversation";
+import type { BackendDocument } from "@/types/backend/document";
+import { SecDocument } from "@/types/document";
 import { fromBackendDocumentToFrontend } from "./utils/documents";
 
 interface CreateConversationPayload {
