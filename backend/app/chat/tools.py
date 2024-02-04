@@ -96,7 +96,7 @@ def get_polygion_io_sec_tool(document: DocumentSchema) -> FunctionTool:
     async def extract_data_from_sec_document(*args, **kwargs) -> List[str]:
         try:
             client = ReferenceClient(
-                api_key=settings.POLYGON_IO_API_KEY,
+                api_key="refactor later",
                 connect_timeout=10,
                 read_timeout=10,
                 max_connections=20,

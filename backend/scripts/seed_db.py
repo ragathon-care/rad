@@ -16,8 +16,8 @@ def copy_to_s3(dir_path: str, s3_bucket: str = settings.S3_ASSET_BUCKET_NAME):
     Copy all files in dir_path to S3.
     """
     s3 = s3fs.S3FileSystem(
-        key=settings.AWS_KEY,
-        secret=settings.AWS_SECRET,
+        key=settings.MINIO_ACCESS,
+        secret=settings.MINIO_SECRET,
         endpoint_url=settings.S3_ENDPOINT_URL,
     )
 

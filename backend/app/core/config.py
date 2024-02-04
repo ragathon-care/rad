@@ -51,6 +51,8 @@ class PreviewPrefixedSettings(BaseSettings):
     """
 
     OPENAI_API_KEY: str
+    MINIO_ACCESS: str
+    MINIO_SECRET: str
 
     class Config(AppConfig):
         env_prefix = "PREVIEW_" if is_pull_request or is_preview_env else ""

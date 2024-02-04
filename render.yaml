@@ -141,8 +141,6 @@ envVarGroups:
       sync: false
     - key: MINIO_SECRET
       sync: false
-    - key: POLYGON_IO_API_KEY
-      sync: false
     - key: VECTARA_API_KEY
       sync: false
     - key: VECTARA_CORPUS_ID
