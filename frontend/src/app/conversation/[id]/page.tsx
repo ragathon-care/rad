@@ -64,6 +64,7 @@ export default function Conversation() {
   // Keeping this in this file for now because this will be subject to change
   const submit = () => {
     if (!userMessage || !conversationId) {
+      console.log(userMessage, conversationId)
       return;
     }
 

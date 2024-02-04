@@ -179,9 +179,6 @@ async def build_doc_id_to_index_map(
             index.storage_context.persist(persist_dir=persist_dir, fs=fs)
             doc_id_to_index[str(doc.id)] = index
 
-    from llama_index.indices import VectaraIndex
-    index = VectaraIndex()
-
     return doc_id_to_index
 
 
@@ -271,7 +268,12 @@ async def get_chat_engine(
 
     vector_query_engine_tools += [
         QueryEngineTool(
-            query_engine=VectaraIndex().as_query_engine()
+            query_engine=VectaraIndex().as_query_engine(
+                similarity_top_k=5,
+                vectara_query_mode="mmr",
+                mmr_k=50,
+                mmr_diversity_bias=0.3,
+            )
         )
     ]
 
