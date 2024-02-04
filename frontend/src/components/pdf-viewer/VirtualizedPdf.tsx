@@ -30,10 +30,10 @@ const pdfjsOptions = pdfjs.GlobalWorkerOptions;
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
 const pdfjsVersion = pdfjs.version;
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-pdfjsOptions.workerSrc =
-  "//unpkg.com/pdfjs-dist@" +
-  String(pdfjsVersion) +
-  "/legacy/build/pdf.worker.min.js";
+pdfjsOptions.workerSrc = require("pdfjs-dist/build/pdf.worker.entry.js");
+// "//unpkg.com/pdfjs-dist@" +
+// String(pdfjsVersion) +
+// "/legacy/build/pdf.worker.min.js";
 
 interface PageType {
   getViewport: (arg0: { scale: number }) => { width: number };
@@ -273,7 +273,6 @@ const VirtualizedPDF = forwardRef<PdfFocusHandler, VirtualizedPDFProps>(
         <div
           className={`flex h-[calc(100vh-44px)] w-[56vw] items-center justify-center`}
         >
-          {" "}
           Loading
         </div>
       );

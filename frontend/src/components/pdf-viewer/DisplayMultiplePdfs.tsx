@@ -1,4 +1,7 @@
-import { ViewPdf } from "@/components/pdf-viewer/ViewPdf";
+import dynamic from 'next/dynamic'
+
+import ViewPdf from "@/components/pdf-viewer/ViewPdf";
+// const ViewPdf = dynamic(import('@/components/pdf-viewer/ViewPdf'), { ssr: false })
 import { useMultiplePdfs } from "@/hooks/useMultiplePdfs";
 import { SecDocument } from "@/types/document";
 import cx from "classnames";

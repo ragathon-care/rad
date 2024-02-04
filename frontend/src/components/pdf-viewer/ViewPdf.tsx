@@ -2,6 +2,11 @@
 import usePDFViewer from "@/hooks/usePdfViewer";
 import { PDFOptionsBar } from "./PdfOptionsBar";
 import React from "react";
+// import dynamic from 'next/dynamic';
+// dynamic(
+//   () => import('./VirtualizedPdf'),
+//   { ssr: false }
+// );
 import MemoizedVirtualizedPDF from "./VirtualizedPdf";
 import { SecDocument } from "@/types/document";
 
@@ -9,7 +14,7 @@ interface ViewPdfProps {
   file: SecDocument;
 }
 
-export const ViewPdf: React.FC<ViewPdfProps> = ({ file }) => {
+const ViewPdf: React.FC<ViewPdfProps> = ({ file }) => {
   const {
     scrolledIndex,
     setCurrentPageNumber,
@@ -60,3 +65,5 @@ export const ViewPdf: React.FC<ViewPdfProps> = ({ file }) => {
     </div>
   );
 };
+
+export default ViewPdf

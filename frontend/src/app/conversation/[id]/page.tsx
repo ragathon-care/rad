@@ -1,5 +1,7 @@
+"use client";
+
 import React, { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/router";
+import { useSearchParams, useRouter } from "next/navigation";
 import { PdfFocusProvider } from "@/context/pdf";
 
 import type { ChangeEvent } from "react";
@@ -18,8 +20,9 @@ import { useModal } from "@/hooks/utils/useModal";
 import useIsMobile from "@/hooks/utils/useIsMobile";
 
 export default function Conversation() {
-  const router = useRouter();
-  const { id } = router.query;
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
+  const router = useRouter()
 
   const { isOpen: isShareModalOpen, toggleModal: toggleShareModal } =
     useModal();
@@ -141,7 +144,6 @@ export default function Conversation() {
             onClick={() => {
               router
                 .push(`/`)
-                .catch(() => console.log("error navigating to conversation"));
             }}
             className="m-4 rounded border bg-llama-indigo px-8 py-2 font-bold text-white hover:bg-[#3B3775]"
           >
@@ -162,7 +164,6 @@ export default function Conversation() {
                 onClick={() => {
                   router
                     .push("/")
-                    .catch(() => console.error("error navigating home"));
                 }}
                 className="ml-4 flex items-center justify-center rounded px-2 font-light text-[#9EA2B0] hover:text-gray-90"
               >
