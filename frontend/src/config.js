@@ -6,5 +6,5 @@ if (process.env.NEXT_PUBLIC_CODESPACES === 'true' && process.env.NEXT_PUBLIC_COD
     }
 }
 
-export const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+export const backendUrl = "https://rad-backend.onrender.com" // process.env.NEXT_PUBLIC_BACKEND_URL;
 
