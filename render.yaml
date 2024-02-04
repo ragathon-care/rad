@@ -50,6 +50,11 @@ services:
           property: connectionString
       - fromGroup: general-settings
       - fromGroup: prod-web-secrets
+      - key: S3_ENDPOINT_URL
+        fromService:
+            name: objectstore
+            type: web
+            property: host
 
   ###############################################################
   # Object store and console for quick review
@@ -150,3 +155,4 @@ envVarGroups:
       sync: false
     - key: DIFFBOT_API_KEY
       sync: false
+    

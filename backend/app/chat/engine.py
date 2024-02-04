@@ -55,6 +55,7 @@ from app.chat.utils import build_title_for_document
 from app.chat.pg_vector import get_vector_store_singleton
 from app.chat.qa_response_synth import get_custom_response_synth
 
+from minio import Minio
 
 logger = logging.getLogger(__name__)
 
@@ -67,6 +68,10 @@ OPENAI_CHAT_LLM_NAME = "gpt-3.5-turbo-0613"
 
 
 def get_s3_fs() -> AsyncFileSystem:
+    client = Minio(
+        access_key=settings.MINIO_ACCESS,
+        secret_key=settings.MINIO_SECRET
+    )
     s3 = s3fs.S3FileSystem(
         key=settings.MINIO_ACCESS,
         secret=settings.MINIO_SECRET,
