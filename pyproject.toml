@@ -9,7 +9,7 @@ authors = [
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^3.10,<3.12"
 numpy = "^1.26.3"
 llama-index = {git = "https://github.com/run-llama/llama_index.git"}
 arxiv = { version = "^2.1.0", optional = true }
