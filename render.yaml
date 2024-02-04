@@ -11,7 +11,7 @@ services:
   # RAD! app frontend and backend
   ###############################################################
   - type: web
-    name: next-js
+    name: rad-frontend
     env: node
     plan: starter
     buildCommand: yarn; yarn build
@@ -52,7 +52,7 @@ services:
   # Object store and console for quick review
   ###############################################################
   - type: web
-    name: minio-server
+    name: objectstore
     healthCheckPath: /minio/health/live
     runtime: image
     image:
@@ -70,7 +70,7 @@ services:
       - key: MINIO_BROWSER
         value: "off"
   - type: web
-    name: minio-console
+    name: objectstore-console
     runtime: image
     image:
       url: minio/console:v0.30.0
@@ -85,7 +85,7 @@ services:
         value: 9090
       - key: MINIO_HOST
         fromService:
-          name: minio-server
+          name: objectstore
           type: web
           property: host
   
