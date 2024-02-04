@@ -30,6 +30,7 @@ from llama_index.callbacks.base import BaseCallbackHandler, CallbackManager
 from llama_index.tools import QueryEngineTool, ToolMetadata
 from llama_index.query_engine import SubQuestionQueryEngine
 from llama_index.indices.query.base import BaseQueryEngine
+from llama_index.indices import VectaraIndex
 from llama_index.vector_stores.types import (
     MetadataFilters,
     ExactMatchFilter,
@@ -68,15 +69,14 @@ OPENAI_CHAT_LLM_NAME = "gpt-3.5-turbo-0613"
 
 
 def get_s3_fs() -> AsyncFileSystem:
-    client = Minio(
-        access_key=settings.MINIO_ACCESS,
-        secret_key=settings.MINIO_SECRET
-    )
+    
     s3 = s3fs.S3FileSystem(
         key=settings.MINIO_ACCESS,
         secret=settings.MINIO_SECRET,
         endpoint_url=settings.S3_ENDPOINT_URL,
     )
+
+    print(f'endpoint url: {settings.S3_ENDPOINT_URL}')
     if not (settings.RENDER or s3.exists(settings.S3_BUCKET_NAME)):
         s3.mkdir(settings.S3_BUCKET_NAME)
     return s3
