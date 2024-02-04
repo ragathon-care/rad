@@ -143,7 +143,7 @@ async def handle_chat_message(
         )
         logger.debug("Engine received")
         templated_message = f"""
-Remember - if I have asked a relevant financial question, use your tools.
+Remember - if I have asked a relevant disability assistance question, use your tools.
 
 {user_message.content}
         """.strip()
