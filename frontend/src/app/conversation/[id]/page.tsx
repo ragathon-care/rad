@@ -63,8 +63,9 @@ export default function Conversation() {
 
   // Keeping this in this file for now because this will be subject to change
   const submit = () => {
+    console.log('submitted')
     if (!userMessage || !conversationId) {
-      console.log(userMessage, conversationId)
+      console.log('here', userMessage, conversationId)
       return;
     }
 
@@ -93,6 +94,7 @@ export default function Conversation() {
     };
   };
   const handleTextChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    console.log('here', event.target.value)
     setUserMessage(event.target.value);
   };
   useEffect(() => {
